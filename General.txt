@@ -1,0 +1,18 @@
+//Sort by second in pair   sort(v.begin(),v.end(),[](auto &x,auto &y){return x.second<y.second;});
+
+*/
+int Ncr(int n, int r)
+{
+    if(dp[n][r]!=-1) return dp[n][r];
+    if(r==0||n==r) return dp[n][r] = 1;
+    return dp[n][r] = (Ncr(n-1, r)%mod + Ncr(n-1, r-1)%mod)%mod;
+}
+/*
+
+//DEBUGGING OUTPUTS:
+    #define outarr(arr) for(int i=0;i<(sizeof(arr)/sizeof(arr[0]));i++){ cout << arr[i] << " ";}cout << endl;
+    #define outvec(v) for(int i=0;i<v.size();i++){ cout << v[i] << " ";}cout << endl;
+    #define outmap(m) for(auto i: m){ cout << i.f << " " << i.sec << endl;}
+    #define outvecvec(v) for(int i=0;i<v.size();i++){for(int j=0;j<v[i].size();j++){cout << v[i][j] << " ";}cout << endl;}
+    #define outvecpair(v) for(int i=0;i<v.size();i++){cout << v[i].first << " " << v[i].second << endl;}
+    #define outset(s) for(auto i : s){cout << i << " ";}cout<<endl;

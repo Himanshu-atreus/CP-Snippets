@@ -1,0 +1,27 @@
+class FenwickTree {
+    private:
+    vector<int> tree;
+    int n,modulo;
+
+    public:
+    FenwickTree(vector<int>& a,int modulus=mod) {
+        n=a.size(); tree.resize(n);
+        modulo=modulus;
+        for(int i=0;i<n;i++) if((i+((i+1)&-(i+1)))<n) tree[i+((i+1)&-(i+1))]+=tree[i];
+        return;
+    }
+    
+    int sum(int k) {
+        int ans=0;
+        while(k>-1) { ans=(ans+tree[k])%modulo; k-=((k+1)&-(k+1)); }
+        return ans;
+    }
+    
+    void add(int k,int x) {
+        while(k<n) {
+            tree[k]=(tree[k]+x)%modulo;
+            k+=((k+1)&-(k+1));
+        }
+        return;
+    }
+};

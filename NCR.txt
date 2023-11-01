@@ -1,0 +1,22 @@
+class NCR {
+    private:
+    vector<int> fact;
+    vector<int> Ifact;
+    int modulo;
+
+    public:
+    NCR(int size=MAX_N,int modulus=mod) {
+        fact.resize(size); Ifact.resize(size);
+        fact[0]=fact[1]=Ifact[0]=Ifact[1]=1;
+        for(int i=2;i<=MAX_N;i++) {
+            fact[i]=(fact[i-1]*i)%modulus;
+            Ifact[i]=(Ifact[i-1]*Inverse_mod_from_fermat(i,modulus))%modulus;
+        }
+        modulo=modulus; return;
+    }
+    
+    int nCr(int n,int r) {
+        if(n<0||r<0||n<r) return 0;
+        return (((fact[n]*Ifact[r])%modulo)*Ifact[n-r])%modulo;
+    }
+};

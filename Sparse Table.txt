@@ -1,0 +1,25 @@
+class SparseTable {
+    private:
+    int (*function) (int,int);
+    int n,modulo,k;
+    vector<vector<int>> spt;
+
+    public:
+    SparseTable(vector<int>& a,int fx(int,int)=func,int modulus=mod) {
+        n=a.size(); modulo=modulus; function=fx;
+        k=log2(n)+1; spt.assign(n,vector<int>(k));
+        for(int i = 0; i < n; i++) spt[i][0]=a[i];
+        for(int j = 1; j < k; j++) {
+            for (int i=0; i+(1<<j)<= n;i++) {
+                spt[i][j] = function(spt[i][j-1], spt[i+(1<<(j-1))][j - 1])%modulo;
+            }
+        }
+        return;
+    }
+
+    int query(int u,int v) {
+        if(u>v) swap(u,v);
+        int j = log2(v-u+1);
+        return function(spt[u][j],spt[v-(1<<j)+1][j])%modulo;
+    }
+};

@@ -1,0 +1,40 @@
+class Trie {
+    private:
+    struct Vertex {
+        int next[trie_len];
+        bool output = false;
+        Vertex() { fill(begin(next), end(next), -1);}
+    };
+    vector<Vertex> trie;
+    char start;
+    
+    public:
+    Trie(char st='a') {
+        trie.emplace_back(); start=st;
+        return;
+    }
+    
+    void add(string s) {
+        int v = 0;
+        for (char ch : s) {
+            int c = ch - start;
+            if (trie[v].next[c] == -1) {
+                trie[v].next[c] = trie.size();
+                trie.emplace_back();
+            }
+            v = trie[v].next[c];
+        }
+        trie[v].output = true;
+        return;
+    }
+    
+    bool find(string s) {
+        int v = 0;
+        for (char ch : s) {
+            int c = ch - start;
+            if (trie[v].next[c] != -1) v = trie[v].next[c];
+            else return false;
+        }
+        return trie[v].output;
+    }
+};
